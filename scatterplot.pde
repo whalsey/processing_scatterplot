@@ -65,11 +65,6 @@ color[] colorMax = {color(255, 0, 0), color(0, 255, 0), color(0, 0, 255), color(
 int colourThemes = 6;
 int colour = 0;
 
-// OTHER FUNCTIONS THAT NEED TO BE WRITTEN
-// normalizeData();
-// plotToPoint();
-// pointToPlot();
-
 // Callback function used to choose file
 void fileSelected(File selection) {
   if (selection == null) {
@@ -121,7 +116,8 @@ String idxToHeader(int idx) {
   return labels[idx];
 }
 
-// todo
+// Function pulls all the data for a particular column and returns them as an array of floats
+// ASSUMES THAT ALL DATA IS NUMERIC
 float[] getColData(int idx) {
   String[] tmp = data.getStringColumn(idx);
   
@@ -134,7 +130,6 @@ float[] getColData(int idx) {
   return dat;
 }
 
-// todo 
 float findMax(int idx) {
   float[] dat = getColData(idx);
   float max = dat[0];
@@ -146,7 +141,6 @@ float findMax(int idx) {
   return max;
 }
 
-// todo
 float findMin(int idx) {
   float[] dat = getColData(idx);
   float min = dat[0];
@@ -158,6 +152,7 @@ float findMin(int idx) {
   return min;
 }
 
+// Function removes all samples that have 'NA' values and returns updated table
 Table removeNA(Table table) {
   TableRow row = null;
   String elem = null;
