@@ -60,8 +60,8 @@ int keyOriginY = -1;
 int keyWidth = -1;
 int keyHeight = -1;
 
-color[] colorMin = {color(255, 245, 245), color(245, 255, 245), color(245, 245, 255), color(250, 250, 250), color(137, 130, 118), color(118, 137, 30)};
-color[] colorMax = {color(255, 0, 0), color(0, 255, 0), color(0, 0, 255), color(5, 5, 5), color(255, 165, 0), color(0, 255, 165)};
+color[] colorMin = {color(250, 250, 250), color(255, 245, 245), color(245, 255, 245), color(245, 245, 255), color(137, 130, 118), color(118, 137, 30)};
+color[] colorMax = {color(5, 5, 5), color(255, 0, 0), color(0, 255, 0), color(0, 0, 255), color(255, 165, 0), color(0, 255, 165)};
 int colourThemes = 6;
 int colour = 0;
 
@@ -296,8 +296,13 @@ void formatText() {
     float[] tmp = screenToPoint(mouseX, mouseY, xmin, xmax, ymin, ymax);
     
     String tt = Float.toString(tmp[0]) + ", " + Float.toString(tmp[1]);
-    text(tt, mouseX+10, mouseY+25);
+    textAlign(CENTER, TOP);
+    int x = (mouseX < drawOriginX + 45) ? drawOriginX + 45 : ((mouseX > drawOriginX + drawWidth - 45) ? drawOriginX + drawWidth - 45 : mouseX);
+    text(Float.toString(tmp[0]), x, plotOriginY + plotHeight + 3);
     rect(mouseX, plotOriginY, 1, plotHeight);
+    textAlign(RIGHT, CENTER);
+    int y = (mouseY < drawOriginY + 15) ? drawOriginY + 15 : ((mouseY > drawOriginY + drawHeight - 15) ? drawOriginY + drawHeight - 15 : mouseY);
+    text(Float.toString(tmp[1]), plotOriginX - 3, y);
     rect(plotOriginX, mouseY, plotWidth, 1);
   }
   
@@ -454,7 +459,7 @@ void keyPressed() {
     zvar = (zvar - 1 < 0) ? numVar - 1 : zvar - 1;
   } else if (key =='c') {
     colour = (colour + 1) % colourThemes;
-  } else {
+  } else if (key == ' ') {
     flag = !flag;
   }
 }
