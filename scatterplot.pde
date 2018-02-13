@@ -99,6 +99,12 @@ void processHeader(Table table) {
   table.removeRow(0);
 }
 
+float findPercentile(float percent, float[] dat) {
+  sort(dat);
+  
+  return dat[int(percent * numSample)];
+}
+  
 int headerToIdx(String header) {
   int idx = -1;
   
@@ -314,6 +320,20 @@ void formatText() {
   rect(plotOriginX - 5, drawOriginY + drawHeight, 5, 1);
   text(Float.toString(ymin), plotOriginX - 5, drawOriginY + drawHeight);
   
+  int[] t1 = pointToScreen(findPercentile(0.25, xnorm), 0);
+  int[] t2 = pointToScreen(findPercentile(0.5, xnorm), 0);
+  int[] t3 = pointToScreen(findPercentile(0.75, xnorm), 0);
+  fill(150);
+  rect(t1[0], plotOriginY + plotHeight - 5, t2[0] - t1[0], 10);
+  rect(t2[0], plotOriginY + plotHeight - 5, t3[0] - t2[0], 10);
+  
+  t1 = pointToScreen(0, findPercentile(0.25, ynorm));
+  t2 = pointToScreen(0, findPercentile(0.5, ynorm));
+  t3 = pointToScreen(0, findPercentile(0.75, ynorm));
+  rect(plotOriginX - 5, t1[1], 10, t2[1] - t1[1]);
+  rect(plotOriginX - 5, t2[1], 10, t3[1] - t2[1]);
+  
+  fill(0);
   textSize(15);
   textAlign(CENTER, TOP);
   text(idxToHeader(xvar), plotWidth/2+plotOriginX, plotOriginY+plotHeight + 60);
